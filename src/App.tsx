@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react";
+import "./App.css";
+import useIsThroughScreen from "./hooks/useIsThroughScreen";
 
-function App() {
+function App(): JSX.Element {
+  const scrollRef = useRef<HTMLDivElement>();
+  const isInside = useIsThroughScreen(scrollRef);
+  console.log(isInside);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div
+        style={{ height: window.innerHeight * 1.1, backgroundColor: "red" }}
+      ></div>
+      <div
+        style={{ height: window.innerHeight * 2, backgroundColor: "aqua" }}
+        ref={(refs) => {
+          if (refs) {
+            scrollRef.current = refs;
+          }
+        }}
+      ></div>
+      <div
+        style={{ height: window.innerHeight, backgroundColor: "yellow" }}
+      ></div>
     </div>
   );
 }
