@@ -1,3 +1,4 @@
+// 判断某个div元素是否在屏幕中
 import { MutableRefObject, useEffect, useState } from "react";
 
 export default function useIsThroughScreen(
