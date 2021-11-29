@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import "./App.css";
+import useIsMobile from "./hooks/useIsMobile";
 import useIsThroughScreen from "./hooks/useIsThroughScreen";
 
 function App(): JSX.Element {
   const scrollRef = useRef<HTMLDivElement>();
-  const isInside = useIsThroughScreen(scrollRef);
-  console.log(isInside);
+  const isInside = useIsThroughScreen(scrollRef, false);
+  const isMobile = useIsMobile();
+  console.log("isInside:" + isInside + ", isMobile:" + isMobile);
   return (
     <div className="App">
       <div
