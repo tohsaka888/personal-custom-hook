@@ -1,22 +1,24 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
 export default function useIsThroughScreen(
-  elementRef: MutableRefObject<HTMLDivElement | undefined>
+  elementRef: MutableRefObject<HTMLDivElement | undefined>,
+  initialVaule: boolean,
+  offset: number = 0
 ): boolean {
-  const [isInside, setIsInside] = useState<boolean>(false);
+  const [isInside, setIsInside] = useState<boolean>(initialVaule);
   useEffect(() => {
     const scrollEvent = () => {
       // 距离屏幕顶部的距离
       const top =
         elementRef.current && elementRef.current.getBoundingClientRect().top;
-      // 距离屏幕底部的巨鹿
+      // 距离屏幕底部的距离
       const bottom =
         elementRef.current && elementRef.current.getBoundingClientRect().bottom;
       if (top && bottom) {
         if (
-          (top >= 0 && top <= window.innerHeight) ||
-          (bottom >= 0 && bottom <= window.innerHeight) ||
-          (top <= 0 && bottom >= window.innerHeight)
+          (top >= 0 + offset && top <= window.innerHeight - offset) ||
+          (bottom >= 0 + offset && bottom <= window.innerHeight - offset) ||
+          (top <= 0 + offset && bottom >= window.innerHeight - offset)
         ) {
           setIsInside(true);
         } else {
@@ -28,6 +30,6 @@ export default function useIsThroughScreen(
     return () => {
       window.removeEventListener("scroll", scrollEvent);
     };
-  }, [elementRef]);
+  }, [elementRef, offset]);
   return isInside;
 }
