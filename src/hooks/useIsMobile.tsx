@@ -1,3 +1,4 @@
+// 判断是否渲染手机端网页
 import { useEffect, useState } from "react";
 
 export default function useIsMobile(): boolean {
